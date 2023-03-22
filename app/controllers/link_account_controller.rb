@@ -5,6 +5,9 @@ require 'securerandom'
 
 class LinkAccountController < ApplicationController
   def index
+  end
+
+  def create
     # accessTokenのvalidation
     response = Faraday.get('https://api.line.me/oauth2/v2.1/verify', access_token: params[:access_token])
     return unless response.success?

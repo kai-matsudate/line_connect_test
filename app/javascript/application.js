@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async function() {
   await fetch(
     '/link_accounts',
     {
-      method: 'GET',
+      method: 'POST',
       body: {
         access_token: accessToken,
       },

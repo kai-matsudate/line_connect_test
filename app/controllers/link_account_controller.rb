@@ -10,7 +10,7 @@ class LinkAccountController < ApplicationController
     return unless response.success?
 
     json = JSON.parse(response.body)
-    return unless json['client_id'] == ENV['line_login_client_id'] || json['expires_in'].to_i > 0
+    return unless json['client_id'] == ENV['LINE_LOGIN_CLIENT_ID'] || json['expires_in'].to_i > 0
 
     # user profileからline user idを取得
     response = Faraday.get('https://api.line.me/v2/profile',nil,

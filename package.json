@@ -1,0 +1,7 @@
+{
+  "name": "linkAccount",
+  "version": "1.0.0",
+  "dependencies": {
+    "@line/liff": "^2.21.4"
+  }
+}

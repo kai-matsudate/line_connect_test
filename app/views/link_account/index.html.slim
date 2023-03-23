@@ -23,15 +23,12 @@ javascript:
     // }
 
     const resjson = await fetch(
-      '/link_accounts',
+      '/link_accounts?access_token=' + accessToken,
       {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
           'X-CSRF-Token': getCsrfToken()
-        },
-        body: {
-          access_token: accessToken,
         },
       }
     );

@@ -5,5 +5,5 @@ Rails.application.routes.draw do
   # root "articles#index\
   root to: 'link_account#index'
   get '/link_accounts', to: 'link_account#index'
-  post '/link_accounts', to: 'link_account#create'
+  get '/generate_link_url', to: 'link_account#generate_link_url'
 end

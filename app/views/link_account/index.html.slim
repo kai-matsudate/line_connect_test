@@ -17,13 +17,12 @@ javascript:
   document.addEventListener("DOMContentLoaded", async function () {
     await liff.init({ liffId: '1660751077-Ddxr23Lv' });
     const accessToken = liff.getAccessToken();
-    console.log(accessToken);
     // if (!liff.isLoggedIn()) {
     //   liff.login();
     //   return;
     // }
 
-    const connectUri = await fetch(
+    const resjson = await fetch(
       '/link_accounts',
       {
         method: 'POST',
@@ -36,7 +35,8 @@ javascript:
         },
       }
     );
-    console.log(connectUri);
+    const uri = await JSON.parse(resjson).uri;
+    console.log(uri);
   });
 
 

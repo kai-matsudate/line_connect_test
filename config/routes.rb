@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index\
   root to: 'link_account#index'
-  get '/link_accounts/', to: 'link_account#index'
-  post '/link_accounts/', to: 'link_account#create'
+  get '/link_accounts', to: 'link_account#index'
+  post '/link_accounts', to: 'link_account#create'
 end

@@ -33,6 +33,6 @@ class LinkAccountController < ApplicationController
     nonce = SecureRandom.base64(20)
 
     # line platformでnonceとline idを関連づける
-    redirect_to "https://access.line.me/dialog/bot/accountLink?linkToken=#{link_token}&nonce=#{nonce}"
+    "https://access.line.me/dialog/bot/accountLink?linkToken=#{link_token}&nonce=#{nonce}"
   end
 end

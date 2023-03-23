@@ -1,5 +1,6 @@
 h2 Please Wait a moment...
 
+script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"
 script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"
 javascript:
   document.addEventListener("DOMContentLoaded", async function () {
@@ -20,3 +21,22 @@ javascript:
       }
     );
   });
+
+  window.onload = function () {
+    initVConsole();
+
+  }
+
+  // Initialize vConsole
+  function initVConsole() {
+    window.vConsole = new window.VConsole({
+      defaultPlugins: ['system', 'network', 'element', 'storage'],
+      maxLogNumber: 1000,
+      onReady: function () {
+        console.log('vConsole is ready.');
+      },
+      onClearLog: function () {
+        console.log('on clearLog');
+      }
+    });
+  }

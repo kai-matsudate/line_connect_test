@@ -33,6 +33,6 @@ class LinkAccountController < ApplicationController
     nonce = SecureRandom.base64(20)
 
     # line platformでnonceとline idを関連づける
-    "https://access.line.me/dialog/bot/accountLink?linkToken=#{link_token}&nonce=#{nonce}"
+    render json: { uri: "https://access.line.me/dialog/bot/accountLink?linkToken=#{link_token}&nonce=#{nonce}" }
   end
 end

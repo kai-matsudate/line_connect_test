@@ -34,8 +34,9 @@ javascript:
       }
     );
 
-    const redirect_url = await res.json().url;
-    console.log(redirect_url);
+    const json = await res.json();
+    console.log(json);
+    console.log(json.url);
     // window.location.href = redirect_url;
   });
 

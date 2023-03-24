@@ -34,6 +34,7 @@ javascript:
     );
 
     const redirect_url = await res.json().url;
+    console.log(redirect_url);
     window.location.href = redirect_url;
   });
 

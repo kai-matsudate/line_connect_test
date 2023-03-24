@@ -7,7 +7,7 @@ class LinkAccountController < ApplicationController
   def index; end
 
   def generate_link_url
-    render json: { url: fetch_link_url params[:access_token] }
+    render json: { url: fetch_link_url(params[:access_token]) }
   end
 
   private

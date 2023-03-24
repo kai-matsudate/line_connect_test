@@ -4,8 +4,7 @@ require 'json'
 require 'securerandom'
 
 class LinkAccountController < ApplicationController
-  def index
-  end
+  def index; end
 
   def generate_link_url
     # accessTokenのvalidation
@@ -33,6 +32,6 @@ class LinkAccountController < ApplicationController
     nonce = SecureRandom.base64(20)
 
     # line platformでnonceとline idを関連づける
-    render json: { uri: "https://access.line.me/dialog/bot/accountLink?linkToken=#{link_token}&nonce=#{nonce}" }
+    render json: { url: "https://access.line.me/dialog/bot/accountLink?linkToken=#{link_token}&nonce=#{nonce}" }
   end
 end

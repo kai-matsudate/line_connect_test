@@ -17,12 +17,12 @@ javascript:
   document.addEventListener("DOMContentLoaded", async function () {
     await liff.init({ liffId: '1660751077-Ddxr23Lv' });
     const accessToken = liff.getAccessToken();
-    // if (!liff.isLoggedIn()) {
-    //   liff.login();
-    //   return;
-    // }
+    if (!liff.isLoggedIn()) {
+      liff.login();
+      return;
+    }
 
-    const response = await fetch(
+    const res = await fetch(
       '/generate_link_url?access_token=' + accessToken,
       {
         method: 'GET',
@@ -32,9 +32,9 @@ javascript:
         },
       }
     );
-    console.log(response);
-    const uri = response['uri'];
-    console.log(uri);
+
+    const redirect_url = await res.json().url;
+    window.location.href = redirect_url;
   });
 
 

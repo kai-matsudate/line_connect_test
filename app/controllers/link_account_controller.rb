@@ -7,11 +7,7 @@ class LinkAccountController < ApplicationController
   def index; end
 
   def generate_link_url
-    url, logs = fetch_link_url(params[:access_token])
-    render json: {
-      url: url,
-      logs: logs
-    }
+    render json: fetch_link_url(params[:access_token])
   end
 
   private
@@ -47,6 +43,21 @@ class LinkAccountController < ApplicationController
     nonce = SecureRandom.base64(20)
 
     # line platformでnonceとline idを関連づける
-    "https://access.line.me/dialog/bot/accountLink?linkToken=#{link_token}&nonce=#{nonce}"
+    if link_token.presence
+      {
+        status: true,
+        data: {
+          url: "https://access.line.me/dialog/bot/accountLink?linkToken=#{link_token}&nonce=#{nonce}",
+          logs: logs
+        }
+      }
+    else
+      {
+        status: false,
+        data: {
+          logs: logs
+        }
+      }
+    end
   end
 end

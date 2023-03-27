@@ -33,9 +33,13 @@ javascript:
     );
 
     const json = await res.json();
-    console.log(json);
-    redirect_url = json['url'];
-    window.location.href = redirect_url;
+
+    if (json.status) {
+      console.log(json);
+      redirect_url = json['data']['url'];
+      console.log(redirect_url);
+      window.location = redirect_url;
+    }
   });
 
 

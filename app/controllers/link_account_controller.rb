@@ -7,35 +7,36 @@ class LinkAccountController < ApplicationController
   def index; end
 
   def generate_link_url
-    render json: { url: fetch_link_url(params[:access_token]) }
+    url = fetch_link_url(params[:access_token])
+    render json: {
+      url: url
+    }
   end
 
   private
 
   def fetch_link_url(access_token)
+    conn = Faraday.new('https://api.line.me')
     # accessTokenのvalidation
-    response = Faraday.get('https://api.line.me/oauth2/v2.1/verify', access_token: access_token)
-    p response.body
-    return unless response.success?
+    res = conn.get('/oauth2/v2.1/verify') do |req|
+      req.params[:access_token] = access_token
+    end
 
-    json = JSON.parse(response.body)
-    return unless json['client_id'] == ENV['LINE_LOGIN_CLIENT_ID'] || json['expires_in'].to_i.positive?
+    json = JSON.parse(res.body)
+    return unless res.success? || json['client_id'] == ENV['LINE_LOGIN_CLIENT_ID'] || json['expires_in'].to_i.positive?
 
     # user profileからline user idを取得
-    response = Faraday.get('https://api.line.me/v2/profile',
-                           headers: {
-                             Authorization: "Bearer #{access_token}"
-                           })
-    p response.body
-    line_id = JSON.parse(response.body)['userId']
+    res = conn.get('/v2/profile') do |req|
+      req.headers['Authorization'] = "Bearer #{access_token}"
+    end
+
+    line_id = JSON.parse(res.body)['userId']
 
     # line user idを用いてアカウント連携用トークン（link token）を生成
-    response = Faraday.post("https://api.line.me/v2/bot/user/#{line_id}/linkToken",
-                            headers: {
-                              Authorization: "Bearer #{access_token}"
-                            })
-    p response.body
-    link_token = JSON.parse(response.body)['linkToken']
+    res = conn.post("/v2/bot/user/#{line_id}/linkToken") do |req|
+      req.headers['Authorization'] = "Bearer #{ENV['MESSAGING_CHENNEL_TOKEN']}"
+    end
+    link_token = JSON.parse(res.body)['linkToken']
 
     nonce = SecureRandom.base64(20)
 

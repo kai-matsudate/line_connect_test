@@ -18,6 +18,7 @@ module LinkAccount
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.hosts << "e89f-240d-1b-9a-c908-a4fb-57c-9d1a-3dc4.jp.ngrok.io"
     config.hosts << 'line-connect-test.onrender.com'
   end
 end

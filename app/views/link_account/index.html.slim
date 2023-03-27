@@ -7,7 +7,6 @@ javascript:
     const metas = document.getElementsByTagName('meta');
     for (let meta of metas) {
       if (meta.getAttribute('name') === 'csrf-token') {
-        console.log('csrf-token:', meta.getAttribute('content'));
         return meta.getAttribute('content');
       }
     }
@@ -17,7 +16,6 @@ javascript:
   document.addEventListener("DOMContentLoaded", async function () {
     await liff.init({ liffId: '1660751077-Ddxr23Lv' });
     const accessToken = liff.getAccessToken();
-    console.log(accessToken);
     if (!liff.isLoggedIn()) {
       liff.login();
       return;
@@ -36,8 +34,8 @@ javascript:
 
     const json = await res.json();
     console.log(json);
-    console.log(json.url);
-    // window.location.href = redirect_url;
+    redirect_url = json['url'];
+    window.location.href = redirect_url;
   });
 
 

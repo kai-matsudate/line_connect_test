@@ -1,4 +1,6 @@
-h2 Please Wait a moment...
+#content
+  p
+    | Please Wait a moment...
 
 script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"
 script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"
@@ -34,11 +36,16 @@ javascript:
 
     const json = await res.json();
 
+    const content = document.getElementById('content');
+
     if (json.status) {
-      console.log(json);
       redirect_url = json['data']['url'];
-      console.log(redirect_url);
-      window.location = redirect_url;
+      liff.openWindow({
+        url: redirect_url,
+      });
+    } else {
+      const text = document.createElement(document.createTextNode('failure...'));
+      content.appendChild(text);
     }
   });
 

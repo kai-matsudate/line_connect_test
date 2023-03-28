@@ -4,10 +4,12 @@ require 'json'
 require 'securerandom'
 
 class LinkAccountController < ApplicationController
-  def index; end
+  def index
+    @juid = params[:juid]
+  end
 
   def generate_link_url
-    render json: fetch_link_url(params[:access_token])
+    fetch_link_url(params[:access_token])
   end
 
   private
@@ -39,23 +41,23 @@ class LinkAccountController < ApplicationController
     logs << res
 
     link_token = JSON.parse(res.body)['linkToken']
-
     nonce = SecureRandom.base64(20)
+    uri = "https://access.line.me/dialog/bot/accountLink?linkToken=#{link_token}&nonce=#{nonce}"
 
     # line platformでnonceとline idを関連づける
     if link_token.presence
-      {
+      render json: {
         status: true,
-        data: {
-          url: "https://access.line.me/dialog/bot/accountLink?linkToken=#{link_token}&nonce=#{nonce}",
-          logs: logs
+        content: {
+          message: '連携urlにリダイレクトします．',
+          uri: uri
         }
       }
     else
-      {
+      render json: {
         status: false,
-        data: {
-          logs: logs
+        content: {
+          message: '連携トークンの取得に失敗しました．'
         }
       }
     end

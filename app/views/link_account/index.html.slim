@@ -21,6 +21,8 @@ javascript:
     if (!liff.isLoggedIn()) {
       liff.login();
       return;
+    } else if (!liff.isInClient()) {
+
     }
 
     const res = await fetch(
@@ -35,18 +37,11 @@ javascript:
     );
 
     const json = await res.json();
-
-    const content = document.getElementById('content');
-
+    console.log(json);
     if (json.status) {
-      redirect_url = json['data']['url'];
-      liff.openWindow({
-        url: redirect_url,
-      });
-    } else {
-      const text = document.createElement(document.createTextNode('failure...'));
-      content.appendChild(text);
+      liff.openWindow({ url: json.content.uri });
     }
+
   });
 
 
